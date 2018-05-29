@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        const ipc=require('electron').ipcRenderer
+        
+        function clickedOpenButton(){
+            ipc.send('open-dialog')
+        }
+
+        ipc.on('selected-file',function(event,data){
+            document.getElementById("text").innerText=data
+        })
+        
+        function clickedSaveButton(){
+            var data=document.getElementById("text").value
+            ipc.send('save-dialog',data)
+        }
+       
+    </script>
+</head>
+<body>
+    <button id="btnOpen" onclick="clickedOpenButton()">Show Open Dialog</button>
+    <button id="btnSave" onclick="clickedSaveButton()">Save</button>
+    <hr/>
+    <textarea id="text" style="width: 850px; height: 500px;"></textarea>
+
+</body>
+</html>
